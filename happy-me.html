@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="preload">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <div id="loader" class="loader" aria-hidden="true"></div>
     <div class="main-container">
       <img class="angry-cat" src="happy-cat.png" alt="Angry Cat" />
       <p class="how-dare-you mrs-saint-delafield-regular">
@@ -25,5 +26,18 @@
         </button>
       </div>
     </div>
+    <script>
+      window.addEventListener("load", function () {
+        document.documentElement.classList.remove("preload");
+        document.documentElement.classList.add("loaded");
+        var loader = document.getElementById("loader");
+        if (loader) {
+          loader.classList.add("fade-out");
+          setTimeout(function () {
+            loader.remove();
+          }, 600);
+        }
+      });
+    </script>
   </body>
 </html>

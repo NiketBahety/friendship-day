@@ -81,3 +81,99 @@ a {
   max-width: 70vw;
   text-align: center;
 }
+
+/* --- Page load & soft transitions --- */
+html,
+body {
+  transition:
+    opacity 480ms cubic-bezier(0.2, 0.9, 0.25, 1),
+    transform 480ms cubic-bezier(0.2, 0.9, 0.25, 1);
+}
+
+/* start hidden while loading */
+html.preload body {
+  opacity: 0;
+  transform: translateY(8px) scale(0.998);
+}
+html.loaded body {
+  opacity: 1;
+  transform: none;
+}
+
+/* animate children of the main container */
+.main-container > * {
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity 520ms cubic-bezier(0.2, 0.9, 0.25, 1),
+    transform 520ms cubic-bezier(0.2, 0.9, 0.25, 1);
+}
+html.loaded .main-container > * {
+  opacity: 1;
+  transform: none;
+}
+
+/* Smooth image transitions */
+img {
+  transition:
+    transform 600ms cubic-bezier(0.2, 0.9, 0.25, 1),
+    opacity 600ms;
+}
+
+/* Button hover micro-interaction */
+.btn {
+  transition:
+    transform 200ms ease,
+    box-shadow 200ms ease,
+    background-color 200ms ease;
+}
+.btn:hover,
+.btn:focus {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(103, 8, 90, 0.12);
+}
+
+/* subtle link fade */
+a {
+  transition:
+    color 180ms ease,
+    opacity 180ms ease;
+}
+
+/* Loader overlay */
+.loader {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.9),
+    rgba(255, 255, 255, 0.7)
+  );
+  z-index: 9999;
+  transition:
+    opacity 520ms ease,
+    visibility 520ms ease;
+}
+.loader::before {
+  content: "";
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 6px solid rgba(103, 8, 90, 0.12);
+  border-top-color: rgb(103, 8, 90);
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loader.fade-out {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
